@@ -194,8 +194,8 @@ String pppfcs16(byte* pByte, int length)
     return str_fcs;
 }
 
-unsigned int HexToDec(String hexString) {
-    unsigned int decValue = 0;
+int HexToDec(String hexString) {
+    int decValue = 0;
     int nextInt;
     for (int i = 0; i < hexString.length(); i++) {
         nextInt = int(hexString.charAt(i));
@@ -204,6 +204,10 @@ unsigned int HexToDec(String hexString) {
         if (nextInt >= 97 && nextInt <= 102) nextInt = map(nextInt, 97, 102, 10, 15);
         nextInt = constrain(nextInt, 0, 15);
         decValue = (decValue * 16) + nextInt;
+    }
+
+        if (decValue > 0x7FFFFFFF) {
+        decValue -= 0x100000000;
     }
     return decValue;
 }
